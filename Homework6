@@ -11,6 +11,7 @@ library(shiny)
 library(tidyverse)
 min.carat <- min(diamonds$carat)
 max.carat <- max(diamonds$carat)
+nms <- names(diamonds)
 # Define UI for application that draws a histogram
 ui <- fluidPage(
 
@@ -20,6 +21,7 @@ ui <- fluidPage(
     # Sidebar with a slider input for number of bins 
     sidebarLayout(
         sidebarPanel(
+          selectInput('y', 'Y', choices = nms, selected = "price"),
           sliderInput("carat.adjuster",
                       "Carats",
                       min = min.carat,
@@ -52,7 +54,7 @@ server <- function(input, output) {
     })
     
     output$diamonds_plot <- renderPlot({
-        ggplot(d_filter(), aes_string(x = "carat", y = "y", color = "clarity")) +
+        ggplot(d_filter(), aes_string(x = "carat", y = input$y, color = "clarity")) +
             geom_point()
        
     })
@@ -60,3 +62,4 @@ server <- function(input, output) {
 
 # Run the application 
 shinyApp(ui = ui, server = server)
+
