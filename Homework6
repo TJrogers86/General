@@ -54,7 +54,7 @@ server <- function(input, output) {
     })
     
     output$diamonds_plot <- renderPlot({
-        ggplot(d_filter(), aes_string(x = "carat", y = input$y, color = "clarity")) +
+        ggplot(d_filter(), aes_string(x = "clarity", y = input$y, color = "clarity")) +
             geom_point()
        
     })
